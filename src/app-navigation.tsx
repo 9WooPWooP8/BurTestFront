@@ -1,20 +1,16 @@
 export const navigation = [
   {
-    text: 'Home',
+    text: 'Телеметрия',
     path: '/home',
     icon: 'home'
   },
   {
-    text: 'Examples',
+    text: 'Отчеты',
     icon: 'folder',
     items: [
       {
-        text: 'Profile',
-        path: '/profile'
-      },
-      {
-        text: 'Tasks',
-        path: '/tasks'
+        text: 'Скважины',
+        path: '/wells'
       }
     ]
   }
