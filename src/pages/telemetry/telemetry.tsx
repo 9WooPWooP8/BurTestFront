@@ -9,22 +9,18 @@ import DataGrid, {
 } from 'devextreme-react/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
 import CustomDataSource from 'devextreme/data/data_source';
+import { getTelemetry } from '../../api/telemetry';
+import { Telemetry as TelemetryType } from '../../api/types';
 
-export interface Telemetry {
-  companyName: string
-	wellId: number
-	wellName: string
-  id: number
-	depth: number
-}
- 
 export default function Telemetry() {
 	useEffect(() => {
 		const interval = setInterval(async () => {
-			const response = await fetch('http://localhost:5055/Telemetry');
-			let json = await response.json()
+			let telemetry = await getTelemetry()
 
-			let updateList = json.map((t: Telemetry) => {return { type: "update", data: t, key: t.id }} );
+			if (telemetry.length < 0)
+				return
+
+			let updateList = telemetry.map((t: TelemetryType) => {return { type: "update", data: t, key: t.id }} );
 
 			customDataStore.push(updateList)
 		}, 6000);
@@ -85,8 +81,8 @@ const customDataStore = new CustomStore({
 	key: 'id',
 
 	load: async () => {
-		const response = await fetch('http://localhost:5055/Telemetry');
-		return response.json();
+		let telemetry = await getTelemetry()
+		return telemetry
 	},
 });
 

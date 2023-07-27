@@ -8,6 +8,7 @@ import DataGrid, {
 	Lookup
 } from 'devextreme-react/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
+import { getWells } from '../../api/wells';
 
 export default function Wells() {
 	return (
@@ -62,7 +63,7 @@ export default function Wells() {
 const customDataSource = new CustomStore({
 	key: 'id',
 	load: async () => {
-		const response = await fetch('http://localhost:5055/Well/detailed/active');
-		return response.json();
+		let wells = await getWells()
+		return wells
 	}
 });
