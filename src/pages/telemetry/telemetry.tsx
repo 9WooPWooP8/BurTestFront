@@ -10,7 +10,6 @@ import DataGrid, {
 import CustomStore from 'devextreme/data/custom_store';
 import CustomDataSource from 'devextreme/data/data_source';
 import { getTelemetry } from '../../api/telemetry';
-import { Telemetry as TelemetryType } from '../../api/types';
 
 export default function Telemetry() {
 	useEffect(() => {
@@ -20,9 +19,9 @@ export default function Telemetry() {
 			if (telemetry.length < 0)
 				return
 
-			let updateList = telemetry.map((t: TelemetryType) => {return { type: "update", data: t, key: t.id }} );
+			let updateList = telemetry.map((t) => {return { type: "update", data: t, key: t.id }} );
 
-			customDataStore.push(updateList)
+			customDataStore.push(updateList as any)
 		}, 6000);
 
 		return () => clearInterval(interval);
